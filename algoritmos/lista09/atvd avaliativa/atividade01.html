@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="">
+
+</head>
+
+<body>
+    <div id="primeira_tela" style="display: block;">
+        <h1>Seja bem vindo ao Banco KANAB</h1>
+
+        <h2>Simulação de Emprestimos e Inverstimentos</h2>
+
+        <h3>Entre com dados de sua conta:</h3>
+
+        <input type="text" id="input_conta" placeholder="conta">
+        <input type="text" id="input_digito" placeholder="Digito">
+        <input type="text" id="input_senha" placeholder="Senha"><br><br><br>
+
+        <button onclick="analisar()">Simular</button>
+    </div>
+    <div id="segunda_tela" style="display: none;">
+        <h1> O Banco KANAB é sua a melhor opção</h1>
+
+        <h2> Emprestimos e Inverstimentos com as melhores taxas do mercado</h2>
+
+        <h3>Entre com dados da sua simulação:</h3>
+
+        valor da operação: <input type="text" id="input_valor" placeholder="valor"><br><BR>
+
+        <select id="select_operacao">
+            <option value="">Selecione a Operação</option>
+            <option value="emprestimo">Emprestimo</option>
+            <option value="investimento">Investimento</option>
+        </select>
+
+        <select name="selecione a prazo" id="select_prazo">
+            <option value="">Selecione a Prazo</option>
+            <option value="curto">Curto</option>
+            <option value="medio">Medio</option>
+            <option value="longo">Longo</option>
+        </select>
+
+        <br>
+        <br>
+        <br>
+
+        <button onclick="calcular()">Mostrar o resultado</button>
+        <button onclick="limpar()">Voltar a Simulação</button>
+
+    </div>
+    <div id="mensagem">
+
+    </div>
+
+</body>
+
+</html>
+<script>
+    function analisar() {
+        var conta = Number(input_conta.value)
+        var digito = Number(input_digito.value)
+        var senha = (input_senha.value)
+        var resto = digito % 10
+
+
+        if ((conta != 0) && resto == digito) {
+            if (senha == "manaus" && (digito >= 0 && digito <= 3)) {
+                primeira_tela.style.display = "none"
+                segunda_tela.style.display = "block"
+
+            } else if (senha == "recife" && (digito >= 4 && digito <= 7)) {
+                primeira_tela.style.display = "none"
+                segunda_tela.style.display = "block"
+            } else if (senha == "fortaleza" && digito >= 8) {
+                primeira_tela.style.display = "none"
+                segunda_tela.style.display = "block"
+            }
+
+        } else {
+            alert = ("está errado")
+        }
+
+    }
+    var simulacao = 0;
+    function calcular() {
+        var prazo = select_prazo.value
+        var operacao = select_operacao.value
+        var valor = Number (input_valor.value);
+
+        
+
+        if (prazo == "curto" || prazo == "medio") {
+            alert("Esta operação está condicionada ao seu perfil")
+        } if (operacao == "emprestimo" && prazo == "medio" ) {
+            var juros = valor * 0.16
+            simulacao++
+         mensagem.innerHTML = `Simulação ${simulacao} – Para o empréstimo de R$${valor} no ${prazo} prazo será cobrado os juros de R$ ${juros} ao ano`
+        }else if (operacao == "emprestimo" && prazo == "longo" ) {
+            var juros = valor * 0.24
+            simulacao++
+         mensagem.innerHTML = `Simulação ${simulacao} – Para o empréstimo de R$${valor} no ${prazo} prazo será cobrado os juros de R$ ${juros} ao ano`
+        }else if (operacao == "emprestimo" && prazo == "curto" ) {
+            var juros = valor * 0.10
+            simulacao++
+            mensagem.innerHTML = `Simulação ${simulacao} – Para o empréstimo de R$${valor} no ${prazo} prazo será cobrado os juros de R$ ${juros} ao ano`
+        }if (operacao == "investimento" && prazo == "medio" ) {
+            var juros = valor * 0.05
+            simulacao++
+            mensagem.innerHTML = `Simulação ${simulacao} – Para o empréstimo de R$${valor} no ${prazo} prazo será cobrado os juros de R$ ${juros} ao ano`
+        }else if (operacao == "investimento" && prazo == "longo" ) {
+            var juros = valor * 0.08
+            simulacao++
+            mensagem.innerHTML = `Simulação ${simulacao} – Para o empréstimo de R$${valor} no ${prazo} prazo será cobrado os juros de R$ ${juros} ao ano`
+        }else if (operacao == "investimento" && prazo == "curto" ) {
+            var juros = valor * 0.12
+            simulacao++
+            mensagem.innerHTML = `Simulação ${simulacao} – Para o empréstimo de R$${valor} no ${prazo} prazo será cobrado os juros de R$ ${juros} ao ano`
+        }
+    }
+    function limpar(){
+        simulacao = 0
+        mensagem.innerHTML = ""
+        input_valor.value = ""
+        select_operacao.value = 0
+        select_prazo.value = 0
+
+    }
+
+</script>

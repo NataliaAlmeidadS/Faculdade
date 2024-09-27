@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    insira um intervalo crescente de valores numéricos: <input type="text" id="input_valor">
+    <button onclick="verificar()">S2 Pares</button>
+    <div id="mensagem"></div>
+</body>
+</html>
+<script>
+    function verificar(){
+        var valor = Number(input_valor.value)
+
+        mensagem.innerHTML = "";
+
+        for(cont = 0; cont <= valor; cont += 2){
+             var resto = cont %2
+            if (resto == 0) {
+                mensagem.innerHTML +=`${cont}<br>`
+            }
+        }
+    }
+</script>
+
+
+<!-- Crie um programa o qual:   
+
+a) Solicite um intervalo crescente de valores numéricos    
+
+b) Ao clicar num botão "S2 Pares"...   
+
+c) Exiba, debaixo do botão, todos os números pares contidos no intervalo.   -->
