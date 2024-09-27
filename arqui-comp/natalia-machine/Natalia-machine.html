@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Bases</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/stitch/1.0.0/stitch.min.css">
+    <style>
+        body {
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            color: #1F2A44;
+        }
+
+        input[type="text"], select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+            width: calc(100% - 22px);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ED145B;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #EFB661;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #D0D3D4;
+            text-align: left;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Natalia's Machine</h1>
+        <input id="inputValue" type="text" placeholder="Digite o valor">
+        <select id="inputBase">
+            <option value="decimal">Decimal</option>
+            <option value="hexadecimal">Hexadecimal</option>
+            <option value="octal">Octal</option>
+            <option value="binario">Binário</option>
+        </select>
+        <br>
+        <button onclick="converter()">Converter</button>
+        <div id="output"></div>
+    </div>
+    
+    <script>
+        function converter() {
+            var inputValue = document.getElementById('inputValue').value;
+            var inputBase = document.getElementById('inputBase').value;
+
+            if (!validarEntrada(inputValue, inputBase)) {
+                alert('Por favor, insira um número válido para a base selecionada.');
+                return;
+            }
+
+            var decimalValue = parseInt(inputValue, 
+                inputBase === 'hexadecimal' ? 16 : 
+                inputBase === 'octal' ? 8 : 
+                inputBase === 'binario' ? 2 : 10);
+
+            var outputHTML = `
+                <p>Decimal: ${decimalValue}</p>
+                <p>Hexadecimal: ${decimalValue.toString(16).toUpperCase()}</p>
+                <p>Octal: ${decimalValue.toString(8)}</p>
+                <p>Binário: ${decimalValue.toString(2)}</p>
+            `;
+
+            document.getElementById('output').innerHTML = outputHTML;
+            document.getElementById('output').style.display = 'block';
+        }
+
+        function validarEntrada(inputValue, inputBase) {
+            var validChars = '';
+
+            if (inputBase === 'decimal') {
+                validChars = '0123456789';
+            } else if (inputBase === 'hexadecimal') {
+                validChars = '0123456789ABCDEFabcdef';
+            } else if (inputBase === 'octal') {
+                validChars = '01234567';
+            } else if (inputBase === 'binario') {
+                validChars = '01';
+            }
+
+            for (var i = 0; i < inputValue.length; i++) {
+                if (validChars.indexOf(inputValue[i]) === -1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>
