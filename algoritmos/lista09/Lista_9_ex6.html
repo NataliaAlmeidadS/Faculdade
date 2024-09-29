@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Nome da pessoa que mais ama na vida: <input type="text" id="input_nome"><br>
+    Quanto o você a ama? <input type="number" id="input_valor"><br>
+    <button onclick="calcular()">Expressar amor</button>
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    function calcular () {
+        var valor = input_valor.value;
+        var nome = input_nome.value;
+    
+        for (var contador =0; contador <= valor; contador++) {
+            div_msg.innerHTML += `${contador} - ${nome}, eu te amo! Sempre lembre disso! <br>`;
+        }
+        
+    }
+</script> 

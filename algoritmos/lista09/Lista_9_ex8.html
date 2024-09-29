@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    insira um numero: <input type="text" id="input_numero" min="0" max="200">
+    <button onclick="multiplicar()">Viva o 7!</button>
+    <div id="mensagem"></div>
+</body>
+</html>
+<script>
+    function multiplicar(){
+        var numero = Number (input_numero.value);
+        mensagem.innerHTML = "";
+
+        for (var cont = 0; cont <=200; cont ++){
+            var resto = cont % 7
+           if (resto == 0){
+                mensagem.innerHTML += `${cont} <br>`
+            }
+        }
+    }
+</script>
+
+<!-- Crie um programa o qual:   
+
+a) Receba um número (tem que estar entre 0 e 200);  
+
+b) Ter um botão chamado "Viva o 7!"   
+
+c) Ao clicar nesse botão, devem aparecer todos os múltiplos de 7 entre 0 e o número informado em a)   -->

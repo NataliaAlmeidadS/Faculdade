@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    insira quantas voltas o carro dará na corrida: <input type="text" id="input_volta">
+    <button onclick="verificar()">Iniciar corrida!</button>
+    <div id="mensagem"></div>
+</body>
+</html>
+<script>
+    function verificar(){
+        var voltaCorrida =  Number (input_volta.value)
+        mensagem.innerHTML = ""
+
+        for(var cont = 1; cont <= voltaCorrida; cont +=1){
+            mensagem.innerHTML += `Carro dando a ${cont}° volta<br> `
+        }
+        mensagem.innerHTML +=` <br>Corrida finalizada!`
+    }
+</script>
+
+<!-- Crie um programa o qual:   
+
+a) Pergunte ao usuário quantas voltas um carro dará numa corrida   
+
+b) Ao clicar num botão "Iniciar corrida!"...   
+
+c) Exiba, debaixo do botão, frases como estas:   
+
+       Carro dando a 1ª volta   
+
+       Carro dando a 2ª volta   
+
+       Carro dando a 3ª volta   
+
+d) Até que o carro "termine" a corrida. Nesse caso, exiba abaixo de tudo, somente 1 vez, a frase "Corrida finalizada!"    -->
