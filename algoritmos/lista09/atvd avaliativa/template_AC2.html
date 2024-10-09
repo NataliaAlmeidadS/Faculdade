@@ -66,85 +66,72 @@
 </html>
 
 <script>
+
     function realizar() {
-        var serviço = select_servico.value;
+        var servico = select_servico.value;
         var dia = select_dia.value;
         var horario = Number(select_horario.value);
-        var atendimentos = input_recorrencia.value;
+        var atendimentos = Number(input_recorrencia.value);
+        var servicoGratis = 0;
+        var valorTotal = 0;
+        var precoFinal = 0;
+
+        // Definir valores e descontos manualmente para cada serviço e dia
+        var precoServico = 0;
+        var desconto = 0;
         
-        
-        
-    
-        
-
-        if (serviço == "" || dia == "" || horario == "" || atendimentos == "") {
-        
-            div_resultado.innerHTML = "Preencha todos os campos para prosseguir"
-        }
-
-
-        if (serviço == "Manicure" && horario >= 8 || horario <= 16) {
-            
-        } else {
-            div_resultado.innerHTML = "O serviço selecionado não está disponível para esse horário"
-        }
-        if (serviço == "Barba" && horario >= 13 || horario <= 20) {
-        } else {
-            
-            div_resultado.innerHTML = "O serviço selecionado não está disponível para esse horário"
-        }
-        if (serviço == "Cabelo" && horario >= 23 || horario <= 24 ) {
-
-        } else {
-            div_resultado.innerHTML = "O serviço selecionado não está disponível para esse horário"
-        }
-
-
-        if (serviço == "Manicure" && dia == "Terça" || dia == "Quinta") {
-            var desconto = 16
-            
-        } else {
-            var preco = 20
-        }
-        if (serviço == "Barba" && dia == "Segunda" || dia == "Quarta") {
-            desconto = 12
-        } else {
-            preço = 15
-        }
-        if (serviço == "Cabelo" && dia == "Sexta" || dia == "Sabádo" || dia == "Domingo") {
-            desconto = 25
-        } else {
-            preço = 30
-        }
-
-
-        for (var contador = 1; contador <= atendimentos; contador++) {
-            if (contador != 1) {
-                 div_resultado.innerHTML += `Atendimento ${contador} - Serviço: ${serviço} | Dia: ${dia} | Hora: ${horario} | Preço Serviço: ${preço} | Desconto: ${desconto} | Preço Final: GG <br>`
+        // Verificar qual serviço foi selecionado e aplicar a lógica
+        if (servico == "manicure") {
+            precoServico = 20;
+            if (dia == "terça" || dia == "quinta") {
+                desconto = 4;
+            }
+        } else if (servico == "barba") {
+            precoServico = 15;
+            if (dia == "segunda" || dia == "quarta") {
+                desconto = 3;
+            }
+        } else if (servico == "cabelo") {
+            precoServico = 30;
+            if (dia == "sexta" || dia == "sábado" || dia == "domingo") {
+                desconto = 5;
             }
         }
 
-        if (serviço == "Manicure" && atendimentos >= 1  ) {
-           
+        // Verificação dos campos
+        if (servico == "" || dia == "" || horario == "" || atendimentos == "") {
+            div_resultado.innerHTML = "Preencha todos os campos para prosseguir";
+        } else {
+            // Verificação de horários disponíveis por serviço
+            if (servico == "manicure" && (horario < 8 || horario > 16)) {
+                div_resultado.innerHTML = "O serviço Manicure não está disponível para esse horário";
+            } else if (servico == "barba" && (horario < 13 || horario > 20)) {
+                div_resultado.innerHTML = "O serviço Barba não está disponível para esse horário";
+            } else if (servico == "cabelo" && (horario < 0 || horario > 23)) {
+                div_resultado.innerHTML = "O serviço Cabelo não está disponível para esse horário";
+            } else {
+                // Calcular o preço final após aplicar o desconto
+                precoFinal = precoServico - desconto;
+
+                // Loop para os atendimentos e cálculo do valor total
+                div_resultado.innerHTML = ""; // Limpar o conteúdo antes de adicionar os resultados
+                for (var i = 1; i <= atendimentos; i++) {
+                    // Aplicação da fidelidade
+                    if ((i == 3 && servico == "manicure") || 
+                        (i == 4 && servico == "barba") || 
+                        (i == 6 && servico == "cabelo")) {
+                        servicoGratis++;
+                    }
+
+                    // Atualizar o valor total considerando cada atendimento
+                    valorTotal += precoFinal;
+
+                    div_resultado.innerHTML += `Atendimento ${i}: Serviço: ${servico} | Dia: ${dia} | Hora: ${horario}h | Preço Serviço: R$${precoServico} | Desconto: R$${desconto} | Preço Final: R$${precoFinal.toFixed(2)}<br>`;
+                }
+
+                // Exibir o resumo final dos atendimentos
+                div_resultado.innerHTML += `<br>Ao longo do ano, você será atendido ${atendimentos} vezes, sendo ${servicoGratis} serviços grátis devido à fidelidade. O valor final do orçamento será de R$${valorTotal.toFixed(2)}.`;
+            }
         }
-        else if (serviço == "Barba" && atendimentos >= 4) {
-
-        } else if (serviço == "Cabelo" && atendimentos >= 6) {
-
-        }
-
-        div_resultado.innerHTML += `Ao longo do ano, você será atendido ${atendimentos} vezes, sendo ${gratuidade} serviços grátis devido à fidelidade, onde o valor final do orçamento será de CC.`
-
-
-        
-
-
-
-
-
-
-     
-
-
     }
 </script>

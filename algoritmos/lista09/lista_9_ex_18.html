@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Digite quantas coca-cola você ja bebeu na vida:
+    <input type="text" id="inp_quantidade"> <br>
+    <button onclick="mostrar()">Ver Quantidade</button>
+    <div id="div_mensagem"></div>
+
+</body>
+</html>
+<script>
+
+    function mostrar(){
+
+        var Quantidade = Number(inp_quantidade.value);
+        var mensagem = '';
+
+        for(var contador = 1; contador <= Quantidade; contador ++){
+            mensagem += `<img src="https://th.bing.com/th/id/OIP.nwnqm74OEq4UcvOA7I8F1AHaHa?w=216&h=216&c=7&r=0&o=5&pid=1.7" style = 'widht: 10%'> `;
+        }
+
+        div_mensagem.innerHTML = mensagem;
+
+    }
+
+
+
+</script>

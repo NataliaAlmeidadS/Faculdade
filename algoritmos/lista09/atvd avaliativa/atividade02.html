@@ -8,19 +8,22 @@
 </head>
 
 <body>
-    Episodio que deseja começar assistindo:<input type="text" id="input_NumeroEp"><br>
-    Quantidade de tempo disponivél: <input type="text" id="input_qntdT"><br>
-    Unidade de tempo em : <select id="select_tempo">
+    Episódio que deseja começar assistindo: <input type="text" id="input_NumeroEp"><br>
+    Quantidade de tempo disponível: <input type="text" id="input_qntdT"><br>
+    Unidade de tempo em:
+    <select id="select_tempo">
         <option value="">Selecione uma opção</option>
         <option value="horas">Horas</option>
         <option value="minutos">Minutos</option>
     </select><br>
-    Pular abertura? <select id="select_abertura">
+    Pular abertura?
+    <select id="select_abertura">
         <option value="">Selecione uma opção</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
     </select><br>
-    Pular encerramento? <select id="select_encerramento">
+    Pular encerramento?
+    <select id="select_encerramento">
         <option value="">Selecione uma opção</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
@@ -28,73 +31,63 @@
 
     <button onclick="verificar()">Assistir Episódios</button>
     <div id="mensagem"></div>
+
+    <script>
+        function verificar() {
+            var numeroDoEp = Number(input_NumeroEp.value);
+            var qntdTDisponivel = Number(input_qntdT.value);
+            var unidadeT = select_tempo.value;
+            var abertura = select_abertura.value;
+            var encerramento = select_encerramento.value;
+            var tempoRestante;
+
+            // Limpa o conteúdo anterior
+            mensagem.innerHTML = "";
+
+            // Converte o tempo disponível em minutos
+            if (unidadeT == "horas") {
+                tempoRestante = qntdTDisponivel * 60;
+            } else if (unidadeT == "minutos") {
+                tempoRestante = qntdTDisponivel;
+            } else {
+                mensagem.innerHTML = "Selecione uma unidade de tempo válida.<br>";
+                return;
+            }
+
+            var episodiosAssistidos = 0;
+            var minutosRestantesNoTempo = tempoRestante;
+            var minutosNoEpisodio = 0;
+
+            // Loop para calcular o tempo de cada episódio
+            for (var ep = numeroDoEp; minutosRestantesNoTempo >= minutosNoEpisodio; ep++) {
+                // Definir tempo do episódio baseado nas seleções de abertura e encerramento
+                if (abertura == "Não" && encerramento == "Não") {
+                    minutosNoEpisodio = 24; // Episódio completo com abertura e encerramento
+                } else if (abertura == "Sim" && encerramento == "Não") {
+                    minutosNoEpisodio = 22; // Com encerramento, mas sem abertura
+                } else if (abertura == "Não" && encerramento == "Sim") {
+                    minutosNoEpisodio = 22; // Com abertura, mas sem encerramento
+                } else {
+                    minutosNoEpisodio = 20; // Sem abertura e sem encerramento
+                }
+
+                // Se houver tempo suficiente para assistir ao episódio completo
+                if (minutosRestantesNoTempo >= minutosNoEpisodio) {
+                    episodiosAssistidos++;
+                    minutosRestantesNoTempo -= minutosNoEpisodio;
+                    mensagem.innerHTML += `Episódio: ${ep} assistido.<br>`;
+                } else {
+                    break; // Se não houver tempo para assistir o próximo episódio, paramos
+                }
+            }
+
+            // Exibe a quantidade de episódios completos assistidos
+            mensagem.innerHTML += "<br>Fim dos episódios!<br>";
+            mensagem.innerHTML += `Foram assistidos: ${episodiosAssistidos} episódios completos.<br>`;
+        }
+
+    </script>
+
 </body>
 
 </html>
-<script>
-    function verificar() {
-        var numeroDoEp = Number(input_NumeroEp.value)
-        var qntdTDisponivel = Number(input_qntdT.value)
-        var unidadeT = Number(select_tempo.value)
-        var abertura = select_abertura.value
-        var encerramento = select_encerramento.value
-        var tempoEpisodio = 20;
-        var tempoRestante = 0;
-
-
-
-        if (numeroDoEp >= 1 || numeroDoEp <= 1100) {
-
-            if (unidadeT == "horas") {
-                var horas = qntdTDisponivel * 60
-
-            } else if (unidadeT == "minutos") {
-                var minuto = qntdTDisponivel / 60
-            }
-
-
-            var aux = 1;
-
-            for (var cont = 1; cont <= tempoEpisodio; cont++) {
-
-                
-                    mensagem.innerHTML += `Episódio : ${aux} <br> `
-                   
-                
-                if (abertura == "Sim" && encerramento == "Sim") {
-                        tempoEpisodio = 20;
-                        mensagem.innerHTML += `${cont} Assistindo Episódio <br>`
-
-                    } else if (abertura == 'Não' && encerramento == 'Não') {
-                        tempoEpisodio = 24;
-                        if (cont <= 2) {
-                            mensagem.innerHTML += `${cont} Assistindo Abertura <br>`
-                        } else if (cont <= 22) {
-                            mensagem.innerHTML += `${cont} Assistindo Episódio <br>`
-                        }
-                        else {
-                            mensagem.innerHTML += `${cont} Assistindo Encerramento <br>`
-                        }
-                    } else if (abertura == 'Não' && encerramento == 'Sim') {
-                        tempoEpisodio = 22;
-                        if (cont <= 2) {
-                            mensagem.innerHTML += `${cont} Assistindo Abertura <br>`
-                        } else {
-                            mensagem.innerHTML += `${cont} Assistindo Episódio <br>`
-                        }
-                    } else if (abertura == 'Sim' && encerramento == 'Não') {
-                        tempoEpisodio = 22;
-                        if (cont <= 20) {
-                            mensagem.innerHTML += `${cont} Assistindo Episódio<br>`
-                        } else {
-                            mensagem.innerHTML += `${cont} Assistindo Encerramento<br>`
-                        }
-
-                    }
-                aux++;
-
-            }
-
-        }
-    }
-</script>

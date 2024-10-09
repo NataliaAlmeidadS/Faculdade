@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Digite o primeiro número: <input type="text" id="inp_primeiro"><br>
+    Digite o segundo número: <input type="text" id="inp_segundo"><br>
+    <button onclick="funcionar()">Curto 3 e 5!</button>
+    <div id="div_mensagem"></div>
+</body>
+</html>
+<script>
+
+    function funcionar(){
+
+        var Primeiro = Number(inp_primeiro.value);
+        var Segundo = Number(inp_segundo.value);
+        var mensagem = ''
+
+        if (Primeiro < Segundo){
+
+            for(var contador = Primeiro; contador <= Segundo; contador++){
+
+
+                if ((contador % 3 == 0) && (contador % 5 == 0)){
+                    mensagem += `É TRI! É PENTA! <br>`
+                }else if (contador % 3 == 0){
+                    mensagem += `É TRI! <br>`
+                }else if (contador % 5 == 0){
+                    mensagem += `É PENTA! <br>`
+                }else{
+                    mensagem += `${contador} <br>`;
+                }
+
+            }
+
+        }else if(Segundo < Primeiro){
+
+            for(var contador = Segundo; contador <= Primeiro; contador++){
+                
+                if ((contador % 3 == 0) && (contador % 5 == 0)){
+                    mensagem += `É TRI! É PENTA! <br>`
+                }else if (contador % 3 == 0){
+                    mensagem += `É TRI! <br>`
+                }else if (contador % 5 == 0){
+                    mensagem += `É PENTA! <br>`
+                }else{
+                    mensagem += `${contador} <br>`;
+                }
+
+            }
+        }else{
+            alert('Informe números diferentes')
+        }
+
+        div_mensagem.innerHTML = mensagem;
+
+
+    }
+
+
+</script>

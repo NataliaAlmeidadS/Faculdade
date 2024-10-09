@@ -1,0 +1,317 @@
+-- Exercicio 5
+
+create database hogwarts;
+use hogwarts;
+
+
+create table casas(
+idcasas int unique,
+nome varchar(45),
+fundador varchar(45),
+nomeProf varchar(45)
+);
+
+insert into casas values 
+(1,"Sonserina", "Salazar", "Vivian"),
+(2,"Corvinal", "Rowena ", "Matheus"),
+(3," Grifinória", " Godric", "Marcos"),
+(4," Helga Hufflepuff", " Helga", "Marcio");
+
+
+ create table aluno (
+ idAluno char(5) unique,
+ nome varchar(45),
+ jogador char(3),
+ dtInicio date,
+ dtFim date,
+ e_monitor char(3),
+ fkcasas int,
+ constraint fkcasaA foreign key (fkcasas) references casas(idCasas));
+ 
+ insert into casa values 
+(1,"Sonserina", "Salazar", "Vivian"),
+(2,"Corvinal", "Rowena ", "Matheus"),
+(3," Grifinória", " Godric", "Marcos"),
+(4," Helga Hufflepuff", " Helga", "Marcio");
+ 
+
+INSERT INTO aluno (idAluno, nome, jogador, dtInicio, dtFim, e_monitor, fkcasas) VALUES 
+('A0001', 'Harry Potter', 'sim', '1991-09-01', '1997-06-30', 'sim', 3),  
+('A0002', 'Ron Weasley', 'sim', '1991-09-01', '1997-06-30', 'não', 3),  
+('A0003', 'Hermione Granger', 'não', '1991-09-01', '1997-06-30', 'sim', 3),  
+('A0004', 'Draco Malfoy', 'sim', '1991-09-01', '1997-06-30', 'não', 1), 
+('A0005', 'Pansy Parkinson', 'não', '1991-09-01', '1997-06-30', 'não', 1),  
+('A0006', 'Luna Lovegood', 'não', '1992-09-01', '1998-06-30', 'não', 2),  
+('A0007', 'Cedrico Diggory', 'sim', '1990-09-01', '1995-06-30', 'sim', 4),  
+('A0008', 'Cho Chang', 'sim', '1991-09-01', '1997-06-30', 'não', 2),  
+('A0009', 'Ginny Weasley', 'sim', '1992-09-01', '1998-06-30', 'não', 3), 
+('A0010', 'Neville Longbottom', 'não', '1991-09-01', '1997-06-30', 'não', 3), 
+('A0011', 'Katie Bell', 'sim', '1991-09-01', '1997-06-30', 'não', 3),  
+('A0012', 'Oliver Wood', 'sim', '1991-09-01', '1997-06-30', 'não', 3);
+
+  create table ajudante (
+  idAju int primary key auto_increment,
+  nome varchar(45),
+  tipo varchar(45),
+  fkaluno char(5),
+  constraint fkAlunojudante foreign key(fkaluno) references aluno(idAluno));
+
+INSERT INTO ajudante (nome, tipo, fkaluno) VALUES
+('Edwiges', 'pet', 'A0001'),  
+('Fawkes', 'patrono', 'A0002'),  
+('Bichento', 'pet', 'A0003'), 
+('Nagini', 'pet', 'A0004'),
+('Patrono Veado', 'patrono', 'A0005');  
+
+select * from casas;
+select * from aluno;
+select * from ajudante;
+
+
+UPDATE aluno SET fkcasas = 3 WHERE idAluno = 'A0001';  -- Harry Potter - Grifinória
+UPDATE aluno SET fkcasas = 3 WHERE idAluno = 'A0002';  -- Ron Weasley - Grifinória
+UPDATE aluno SET fkcasas = 1 WHERE idAluno = 'B5678';  -- Draco Malfoy - Sonserina
+UPDATE aluno SET fkcasas = 2 WHERE idAluno = 'C9012';  -- Luna Lovegood - Corvinal
+UPDATE aluno SET fkcasas = 4 WHERE idAluno = 'A0007';  -- Cedrico Diggory - Lufa-Lufa
+UPDATE aluno SET fkcasas = 3 WHERE idAluno = 'A0003';  -- Hermione Granger - Grifinória
+
+
+SELECT 
+    a.nome AS nomeAluno, 
+    a.dtInicio AS "Data início", 
+    aj.nome AS patrono
+FROM 
+    aluno a
+LEFT JOIN 
+    ajudante aj ON a.idAluno = aj.fkaluno
+WHERE 
+    a.fkcasas = 4;  -- Lufa-Lufa
+
+ SELECT 
+    a.nome AS nomeAluno, 
+    aj.tipo AS pet, 
+    c.nome AS casa
+FROM 
+    aluno a
+LEFT JOIN 
+    ajudante aj ON a.idAluno = aj.fkaluno AND aj.tipo = 'pet'
+JOIN 
+    casas c ON a.fkcasas = c.idcasas;
+
+
+drop database hogwarts;
+ -- Corrigido 
+ 
+ create database hogwarts;
+ use hogwarts;
+ 
+ create table casa(
+ idcasa int primary key auto_increment,
+ nome varchar (45),
+ fundador varchar(45),
+ professor varchar(45)
+ );
+ 
+ create table aluno(
+ ra char(5) primary key,
+ nome varchar(45),
+ dtInicio date,
+ dtFim date,
+ pet varchar(45),
+ patrono varchar(45),
+ fkCasa int,
+ constraint fkcasaAluno foreign key (fkCasa) references Casa(idCasa),
+  atleta char(3),
+ constraint chk_atleta check (atleta in('sim','não')),
+ fkMonitor char(5),
+ constraint fkMonitor foreign key (fkMonitor) references aluno(ra));
+ 
+ insert into casa values 
+(1,"Sonserina", "Salazar", "Vivian"),
+(2,"Corvinal", "Rowena ", "Matheus"),
+(3," Grifinória", " Godric", "Marcos"),
+(4," Helga Hufflepuff", " Helga", "Marcio");
+
+
+ 
+ INSERT INTO aluno (ra, nome, atleta, dtInicio, dtFim, pet, patrono) VALUES
+('A0001', 'Harry Potter', 'sim', '1991-09-01', '1997-06-30', null, 'Cervo'),  
+('A0002', 'Ron Weasley', 'sim', '1991-09-01', '1997-06-30', 'Perebas', 'Jack Russell Terrier'),
+('A0003', 'Hermione Granger', 'não', '1991-09-01', '1997-06-30', 'Bichento', 'Lontra'),
+('A0004', 'Draco Malfoy', 'sim', '1991-09-01', '1997-06-30', 'Coruja', 'Serpente'),
+('A0005', 'Neville Longbottom', 'não', '1991-09-01', '1997-06-30', 'Trevor', 'Leão'),
+('A0006', 'Luna Lovegood', 'não', '1992-09-01', '1998-06-30', 'Arnold', 'Lebre'),
+('A0007', 'Cedrico Diggory', 'sim', '1990-09-01', '1994-06-30', null, 'Cão'),
+('A0008', 'Ginny Weasley', 'sim', '1992-09-01', '1999-06-30', 'Píchi', 'Cavalo'),
+('A0009', 'Cho Chang', 'sim', '1990-09-01', '1994-06-30', null, 'Cisne'),
+('A0010', 'Pansy Parkinson', 'não', '1991-09-01', '1997-06-30', null, 'Pássaro'),
+('A0011', 'Seamus Finnigan', 'sim', '1991-09-01', '1997-06-30', null, 'Raposa'),
+('A0012', 'Dean Thomas', 'sim', '1991-09-01', '1997-06-30', null, 'Lobo'),
+('A0013', 'Fred Weasley', 'sim', '1990-09-01', '1997-06-30', 'Errol', null);
+
+ select* from aluno;
+ 
+ select * from aluno where atleta = 'sim';
+ 
+ update aluno set fkCasa = 1 where ra = 'A0001';
+ update aluno set fkCasa = 1 where ra = 'A0002';
+ update aluno set fkCasa = 1 where ra = 'A0003';
+ update aluno set fkCasa = 3 where ra = 'A0005';
+    
+select nome as nomeAluno, dtInicio as "Data de Inicio", patrono from aluno where fkCasa =1 ;
+    
+select a.nome, a.pet, c.nome from aluno as a join casa as c on fkCasa = idCasa;
+
+update aluno set fkMonitor ='A0003' where ra = 'A00011';
+update aluno set fkMonitor ='A0004' where ra = 'A00012';
+update aluno set fkMonitor ='A0001' where ra = 'A0009';
+update aluno set fkMonitor ='A0003' where fkCasa = '1';
+
+select m.nome as "Monitor responsavél", 
+a.nome as "Nome aluno", 
+c.nome as casa 
+from aluno as a
+ join aluno
+as m on a.fkMonitor = m.ra join casa as c on a.fkCasa = c.idCasa;
+    
+select * from aluno;    
+    
+select a.nome as aluno, c.nome as casa, a.atleta as jogador,
+case when fkcasa is null then "Aluno não aloxado" else fkCasa
+END AS temCasa,
+
+ifnull(pet, "nenhum pet"),
+ifnull(patrono, "Sem memorias felizes")
+
+from aluno as a join casa as c on a.fkCasa = c.idCasa;
+
+select a.nome as aluno, a.dtFim as "Data de Encerramento",
+c.*
+from aluno as a join casa as c on  fkCasa = c.idCasa;
+
+select a.*, ifnull(m.nome, "Tem caroço nesse angu") as monitor 
+from aluno as a
+left join aluno as m
+ on m.ra = a.fkMonitor;
+ 
+
+SELECT a.nome as aluno, CASE  
+	WHEN a.fkMonitor IS NULL
+		THEN "Aluno não iniciou o curso em Hogwarts"
+	ELSE m.nome 
+	END AS monitor
+FROM aluno AS a 
+    LEFT JOIN aluno AS m 
+    ON a.fkMonitor = m.ra;
+	
+DROP DATABASE hogwarts;
+
+
+-- Exercicio 01
+
+create database escola;
+use escola;
+
+create table aluno (
+idAluno int primary key auto_increment,
+nome varchar(45),
+dtNasc date,
+matricula char(8)
+);
+
+
+create table endereco(
+idEndereco int primary key,
+nome varchar(45),
+numero int,
+logradouro varchar(45),
+bairro varchar(45),
+cidade varchar(45),
+estado varchar(45),
+cep char(8),
+fkAluno int unique ,
+constraint fkAlunoEnd foreign key (fkAluno) references aluno (idAluno)
+)auto_increment = 100;
+
+INSERT INTO aluno  VALUES
+(default,'Ana Clara', '2004-01-10', 'RA000001'),
+(default,'Bruno Oliveira', '2003-02-15', 'RA000002'),
+(default,'Carla Mendes', '2002-03-20', 'RA000003'),
+(default,'Daniel Costa', '2005-04-25', 'RA000004'),
+(default,'Eliane Ferreira', '2004-05-30', 'RA000005'),
+(default,'Fábio Almeida', '2003-06-05', 'RA000006'),
+(default,'Gabriela Santos', '2005-07-10', 'RA000007'),
+(default,'Henrique Lima', '2002-08-15', 'RA000008'),
+(default,'Isabela Rocha', '2003-09-20', 'RA000009'),
+(default,'João Silva', '2005-10-25', 'RA000010');
+
+
+INSERT INTO endereco  VALUES 
+(100, 'Casa Natalia', 10, 'Rua das Flores', 'Centro', 'São Paulo', 'SP', '01001000', 1),
+(101, 'Apartamento da Maria', 202, 'Avenida Paulista', 'Bela Vista', 'São Paulo', 'SP', '01311000', 2),
+(102, 'Casa do Pedro', 15, 'Rua das Palmeiras', 'Jardim América', 'Rio de Janeiro', 'RJ', '22440010', 3),
+(103, 'Casa da Ana', 123, 'Rua Augusta', 'Consolação', 'São Paulo', 'SP', '01413000', 4),
+(104, 'Residência do Carlos', 56, 'Rua 7 de Setembro', 'Centro', 'Belo Horizonte', 'MG', '30110000', 5),
+(105, 'Casa da Paula', 80, 'Rua 25 de Março', 'Centro', 'São Paulo', 'SP', '01021000', 6),
+(106, 'Casa do José', 32, 'Avenida Rio Branco', 'Centro', 'Curitiba', 'PR', '80010000', 7),
+(107, 'Apartamento do Lucas', 302, 'Rua Barão de Itapetininga', 'República', 'São Paulo', 'SP', '01042000', 8),
+(108, 'Casa da Carla', 45, 'Rua XV de Novembro', 'Centro', 'Florianópolis', 'SC', '88015010', 9),
+(109, 'Residência da Fernanda', 27, 'Avenida Brasil', 'Copacabana', 'Rio de Janeiro', 'RJ', '22041010', 10);
+
+
+select * from aluno;
+select * from endereco;
+
+
+select aluno.nome, endereco.numero, endereco.logradouro, endereco.bairro, endereco.cidade, endereco.estado, endereco.cep
+from aluno join endereco on idendereco;
+
+select aluno.nome,
+ endereco.estado 
+ from aluno
+ join endereco
+ on  aluno.idAluno = endereco.fkAluno 
+ where endereco.estado = 'SP';
+ 
+ SELECT * FROM endereco WHERE estado = 'RJ';
+ 
+  SET SQL_SAFE_UPDATES = 0; -- erro 1175
+ delete from endereco where estado = 'RJ';
+
+ALTER TABLE endereco ADD COLUMN pais VARCHAR(50);
+
+-- Exclua os endereços de alunos cujo bairro tenha como segunda letra "a".(coloquei O) Consolação
+delete from endereco where bairro like '_o%';
+
+ALTER TABLE endereco RENAME COLUMN cep TO codigoPostal;
+select * from endereco;
+
+SELECT aluno.nome, endereco.codigoPostal, endereco.numero 
+FROM aluno 
+JOIN endereco ON aluno.idAluno = endereco.fkAluno 
+ORDER BY aluno.nome;
+
+SELECT aluno.nome
+FROM aluno
+LEFT JOIN endereco ON aluno.idAluno = endereco.fkAluno
+WHERE endereco.fkAluno IS NULL;
+
+select aluno.nome as nomeAluno, 
+endereco.logradouro as logradouroEndereco 
+from aluno 
+join endereco on endereco.fkAluno;
+
+SELECT aluno.nome 
+FROM aluno 
+LEFT JOIN endereco ON aluno.idAluno = endereco.fkAluno 
+ORDER BY aluno.nome 
+LIMIT 5; -- não ensinado, mas pesquisei
+
+select * from aluno where nome not like '%a%'; -- todos tem 
+select * from aluno where nome not like '%e%';
+
+DELETE FROM aluno;
+DELETE FROM endereco WHERE fkAluno IS NOT NULL;
+
+
+

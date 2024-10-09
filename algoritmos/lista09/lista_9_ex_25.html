@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Digite um valor: <input type="text" id="inp_valor"><br>
+    <button onclick="mostrar()">Ver divisores</button>
+    <div id="div_mensagem"></div>
+</body>
+</html>
+
+<script>
+
+    function mostrar(){
+
+        var Valor = Number(inp_valor.value);
+        var mensagem = `Divisores do Número ${Valor}: <br>`;
+
+        var divisores = '';
+
+        var primo = '';
+
+        var qtdDivisores = 0
+
+        if (Valor >= 0 && Valor <= 100){
+
+            for (var contador = 1; contador <= Valor; contador ++){
+
+                if (Valor % contador == 0){
+                    divisores += `${contador} <br>`
+                    qtdDivisores += 1
+                }          
+                
+            }
+            if (qtdDivisores <= 2){
+                    primo = `O número ${Valor} é um número primo`
+            }
+            
+
+            div_mensagem.innerHTML = `${mensagem} ${divisores} ${primo}`
+
+        }else{
+            alert('Valor incorreto, informe um número entre 0 e 100');
+        }
+
+
+    }
+
+
+</script>
